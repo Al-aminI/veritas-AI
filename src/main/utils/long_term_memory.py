@@ -18,7 +18,7 @@ client = QdrantClient(
 )
 
 
-def save_memory_to_databank(memory_data, user_id):
+def save_memory_to_databank(memory_data, session_id):
    
     docs = [str(memory_data)]
     try:
@@ -34,16 +34,16 @@ def save_memory_to_databank(memory_data, user_id):
     
 
     client.add(
-    collection_name=str(user_id),
+    collection_name=str(session_id),
     documents=docs,
     metadata=metadata,
     )
     return "i have added the following memory to my memory bank: " + memory_data
 
 
-def retrieve_memory_from_databank(memory_description, user_id):
+def retrieve_memory_from_databank(memory_description, session_id):
     search_result = client.query(
-    collection_name=str(user_id),
+    collection_name=str(session_id),
     query_text=memory_description,
     limit=6
     )

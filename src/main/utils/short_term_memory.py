@@ -5,7 +5,7 @@ import hashlib as h
 import requests
 
 
-url = 'https://api.jsonbin.io/v3/b/668eb5d7acd3cb34a8641d4a'
+base_url = 'https://api.jsonbin.io/v3/b'
 
 headers = {
   'Content-Type': 'application/json',
@@ -13,51 +13,53 @@ headers = {
 }
 
 
-def get_session_by_id(user_id):
-    try:
-        req = requests.get(url, json=None, headers=headers)
-        data = json.loads(req.text)['record']
-        for session in data:
-           
-            if session[0]["user_id"] == user_id:
-                return session[0]
-       
-        print(f"No session found with user_id: {user_id}")
-        return None
-    except:
-        print("issue retrieving short term memory")
-        return None   
+def get_session_by_id(bin_id):
+  
+    url = f"{base_url}/{bin_id}"
+    req = requests.get(url, json=None, headers=headers)
+    if req.status_code == 200:
+        # print(req.json())
+        return req.json()["record"]
+    else:
+        raise Exception(f"Failed to load data: {req.text}")
+      
 
-def append_to_json_file(new_data):
-
-    req = requests.put(url, json=[new_data], headers=headers)
+def update_session_history(new_data, bin_id):
+    url = f"{base_url}/{bin_id}"
+    req = requests.put(url, json=new_data, headers=headers)
     return True
 
 
-def reset_short_term_memory():
+def reset_short_term_memory(bin_id):
     data = {
-            "initial_state": True,
-            "is_process_running": False,
-            "current_action": None,
-            "current_state": None,
-            "states": [],
-            "environment_state_actions_sequences": {},
-        }
+        "conversation_history": "not_given",
+        "user_prompt": "not_given",
+        "recent_response": "not_given",
+        "context": "not_given",
+        "current_webpage": "not_given",
+        "list_of_all_webpages": "not_given",
+        "your_response": "not_given",
+        "next_webpage_to_navigate_to": "not_given"
+    }
+    url = f"{base_url}/{bin_id}"
     req = requests.put(url, json=data, headers=headers)
     return True
 
 
 def create_bin():
     initial_data = {
-        "initial_state": True,
-        "is_process_running": False,
-        "parent": None,
-        "current_state": None,
-        "is_current_state_final_state": False,
-        "states": [],
-        "user_responses": {},
+        "conversation_history": "not_given",
+        "user_prompt": "not_given",
+        "recent_response": "not_given",
+        "context": "not_given",
+        "current_webpage": "not_given",
+        "list_of_all_webpages": "not_given",
+        "ai_response": "not_given",
+        "next_webpage_to_navigate_to": "not_given"
+        
     }
-    response = requests.post(url, json=initial_data, headers=headers)
+    
+    response = requests.post(base_url, json=initial_data, headers=headers)
     if response.status_code == 200:
         return response.json()["metadata"]["id"]
     else:

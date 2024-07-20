@@ -1,5 +1,5 @@
 
-from ..services.agent import act
+from ..services.action import runAgent
 from ..utils.dto import AgentDto
 from flask import request
 from flask_restx import Resource
@@ -21,7 +21,7 @@ class Act(Resource):
         """take action given your current state and the following action data"""
         
         action_data = request.json
-        response= act(action_data)
+        response= runAgent(action_data)
         
        
         return response
