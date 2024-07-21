@@ -2,7 +2,7 @@
 FROM python:3.9-slim
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /
 
 ENV SECRET_KEY=myscrete
 ENV DATABASE_URL=mydburl
@@ -13,7 +13,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy the requirements.txt file into the container at /app
-COPY requirements.txt /app/
+COPY requirements.txt /
 
 # Install any needed packages specified in requirements.txt
 RUN pip install psycopg2-binary
@@ -24,5 +24,5 @@ COPY . /app/
 
 EXPOSE 5000
 # Start your application
-CMD ["python", "manage.py", "run"]
+CMD ["python", "app.py", "run"]
 # ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
