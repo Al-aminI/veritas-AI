@@ -66,7 +66,7 @@ def runAgent(prompt_data):
     response = take_action(str(formatted_prompt), system_prompt)
     try:
         response_data = convert_string_to_json(response)
-        print(type(response_data), response_data)
+        # print(type(response_data), response_data)
 
     except:
         state_action_result = json.dumps(response)
