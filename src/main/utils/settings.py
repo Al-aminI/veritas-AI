@@ -75,7 +75,9 @@ def format_actor_prompt(prompt_data):
         4. Determine if navigation to a different webpage is necessary based on the user's query and available pages. 
         5. Always return the link of the next page from the list of web pages given.
         6. Format your response in the specified JSON structure.
-
+        7. Do not include the list_of_webpages and conversation_history, some_context, user_prompt and recent_response in your json response.
+        8. Avoid given factual answers not present in the context, more especially about individuals and executives, instead refer the page link that is likely to contain that information.
+        
         Remember:
         - Always make sure to return the link of the next page from the list of web pages given.
         - Prioritize accuracy over speculation. If unsure, indicate uncertainty.
@@ -84,7 +86,9 @@ def format_actor_prompt(prompt_data):
         - Only suggest navigation to a new page if it's clearly beneficial to answering the query.
         - Always return the link of the next page from the list of web pages given.
         - Do not include the list_of_webpages and conversation_history, some_context, user_prompt and recent_response in your json response.
-        - Avoid given factual answers not present in the context, instead refer the page link that is likely to contain that information
+        - Avoid given factual answers not present in the context, more especially about individuals and executives, instead refer the page link that is likely to contain that information.
+        - Do not include the list_of_webpages and conversation_history, some_context, user_prompt and recent_response in your json response.
+        
         Your response must be in the following JSON format, don't add None or null words in your response instead use not_given. do not include the list of webpages and conversation_history, some_context, user_prompt and recent_response in your json response.:
         {prompt_data}
 
