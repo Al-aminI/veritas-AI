@@ -48,12 +48,12 @@ def runAgent(prompt_data):
     # retrieved_context = "no contxt available, go ahead and answer"
      
 
-    history = temporary_memory['conversation_history']
+    # history = temporary_memory['conversation_history']
     states = list_of_university_website_pages
     current_state = temporary_memory['next_webpage_to_navigate_to']
     current_action = temporary_memory['ai_response']
     data = {
-        "conversation_history": history,
+        "conversation_history": "no recent conversation yet",
         "user_prompt": user_prompt,
         "recent_response": current_action,
         "some_context": retrieved_context,
