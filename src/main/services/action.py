@@ -11,7 +11,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from .memory import Memory
 from ..utils.helpers import convert_string_to_json
 from ..utils.actor import take_action
-from ..utils.settings import format_actor_prompt, system_prompt
+from ..utils.settings import format_actor_prompt, system_prompt, list_of_university_website_pages
 
 
 
@@ -38,18 +38,18 @@ def runAgent(prompt_data):
             "recent_response": "not_given",
             "context": "not_given",
             "current_webpage": prompt_data['current_webpage'],
-            "list_of_all_webpages": prompt_data['list_of_all_webpages'],
+            "list_of_all_webpages": list_of_university_website_pages,
             "ai_response": "not_given",
             "next_webpage_to_navigate_to": "not_given"
         }
     else:
         temporary_memory = memory.get(session_id) 
-    # retrieved_context = memory.retriveMemory(f"History: {prompt_data['conversation_history']}. User: {user_prompt}.") #, session_id)
-    retrieved_context = "no contxt available, go ahead and answer"
+    retrieved_context = memory.retriveMemory(user_prompt)
+    # retrieved_context = "no contxt available, go ahead and answer"
      
 
     history = temporary_memory['conversation_history']
-    states = temporary_memory['list_of_all_webpages']
+    states = list_of_university_website_pages
     current_state = temporary_memory['next_webpage_to_navigate_to']
     current_action = temporary_memory['ai_response']
     data = {
@@ -77,9 +77,10 @@ def runAgent(prompt_data):
 
 
     # response_data["session_id"] = str(session_id)
-    
-    memory.update(response_data, str(session_id))
-    return [response_data, session_id]
+    dictionary = json.loads(response_data)
+    dictionary["session_id"] = str(session_id)
+    memory.update(dictionary, str(session_id))
+    return dictionary
 
 # data = {
 #   "user_prompt": "what is the address of the school",
