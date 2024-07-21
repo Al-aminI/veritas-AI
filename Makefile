@@ -14,11 +14,11 @@ install:
 tests:
 	. venv/bin/activate; \
 	pip install -r requirements.txt;
-	python manage.py db_create_all
-	python manage.py test
+	python app.py db_create_all
+	python app.py test
 
 run:
 	
-	python manage.py run
+	python app.py run
 
 all: clean install tests run
