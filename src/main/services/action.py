@@ -64,19 +64,17 @@ def runAgent(prompt_data):
     }
     formatted_prompt = format_actor_prompt(data)
     response = take_action(str(formatted_prompt), system_prompt)
+    # print(type(response))
     try:
         response_data = convert_string_to_json(response)
-        # print(type(response_data), response_data)
-
+       
     except:
+        # if str(type(response)) == "<class 'str'>":
         state_action_result = json.dumps(response)
         state_action = json.loads(str(state_action_result))
         response_data = convert_string_to_json(state_action)
+    
 
-        # response_data = json.loads(state_action)
-
-
-    # response_data["session_id"] = str(session_id)
     dictionary = json.loads(response_data)
     dictionary["session_id"] = str(session_id)
     memory.update(dictionary, str(session_id))

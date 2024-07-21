@@ -58,7 +58,9 @@ def format_memory_prompt(user_input):
                 "store_memory": "false"
             }
             Only provide a  RFC8259 compliant JSON response. make sure you generate RFC8259 compliant JSON, do not add any text apart from the json.
-      
+            Generate a valid JSON object with the following characteristics:
+            1. Use only double quotes (") for all keys and string values.
+            2. Escape any special characters within strings, especially double quotes and backslashes.
     """
     return memory_agent_system_prompt
 
@@ -86,7 +88,9 @@ def format_actor_prompt(prompt_data):
         Ensure that "your_response" and "next_webpage_to_navigate_to" are filled based on your analysis. All other fields should remain as provided in the input data.
         do not include the list of webpages and conversation_history, some_context, user_prompt and recent_response in your json response.
         do not add any text apart from the json.
-            
+        Generate a valid JSON object with the following characteristics:
+        1. Use only double quotes (") for all keys and string values.
+        2. Escape any special characters within strings, especially double quotes and backslashes.  
     """
     return memory_agent_system_prompt
 

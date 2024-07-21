@@ -12,7 +12,7 @@ def convert_string_to_json(input_string):
         
         # Convert the dictionary to a JSON string
         json_string = json.dumps(dict_data, indent=2)
-        
+        # print(json_string, type(json_string))
         return json_string
     except (SyntaxError, ValueError) as e:
         return f"Error: Unable to convert the string to JSON. {str(e)}"
