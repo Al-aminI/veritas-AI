@@ -78,6 +78,7 @@ def runAgent(prompt_data):
     dictionary = json.loads(response_data)
     dictionary["session_id"] = str(session_id)
     memory.update(dictionary, str(session_id))
+    print(dictionary)
     return dictionary
 
 # data = {
