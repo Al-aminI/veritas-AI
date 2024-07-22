@@ -33,7 +33,7 @@ def runAgent(prompt_data):
         session_id = memory.create()
         # print(session_id)
         temporary_memory = {
-            "conversation_history": "not_given",
+            "conversation_history": "",
             "user_prompt": user_prompt,
             "recent_response": "not_given",
             "context": "not_given",
@@ -51,11 +51,9 @@ def runAgent(prompt_data):
     # history = temporary_memory['conversation_history']
     states = list_of_university_website_pages
     current_state = temporary_memory['next_webpage_to_navigate_to']
-    current_action = temporary_memory['ai_response']
     data = {
-        "conversation_history": "no recent conversation yet",
+        "conversation_history": temporary_memory["conversation_history"],
         "user_prompt": user_prompt,
-        "recent_response": current_action,
         "some_context": retrieved_context,
         "current_webpage": current_state,
         "list_of_all_webpages": states,
@@ -77,8 +75,9 @@ def runAgent(prompt_data):
 
     dictionary = json.loads(response_data)
     dictionary["session_id"] = str(session_id)
+    dictionary["conversation_history"] = ". " + temporary_memory["conversation_history"] + ". User: " + user_prompt + ". AI Response: " + dictionary["ai_response"]
     memory.update(dictionary, str(session_id))
-    print(dictionary)
+    
     return dictionary
 
 # data = {

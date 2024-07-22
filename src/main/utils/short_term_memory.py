@@ -48,7 +48,7 @@ def reset_short_term_memory(bin_id):
 
 def create_bin():
     initial_data = {
-        "conversation_history": "not_given",
+        "conversation_history": "",
         "user_prompt": "not_given",
         "recent_response": "not_given",
         "context": "not_given",
